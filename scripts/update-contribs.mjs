@@ -51,37 +51,56 @@ function replaceSection(readme, start, end, body) {
 const now = new Date();
 const oneYearAgo = new Date(now);
 oneYearAgo.setUTCFullYear(now.getUTCFullYear() - 1);
-const yearStart = new Date(Date.UTC(now.getUTCFullYear(), 0, 1, 0, 0, 0));
 
-const query = `
-query($login: String!, $from12: DateTime!, $to12: DateTime!, $fromY: DateTime!, $toY: DateTime!) {
+const queryUser = `
+query($login: String!) {
+  user(login: $login) { createdAt }
+}
+`;
+
+const queryRange = `
+query($login: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $login) {
-    last12: contributionsCollection(from: $from12, to: $to12) {
-      contributionCalendar { totalContributions }
-    }
-    ytd: contributionsCollection(from: $fromY, to: $toY) {
+    contributionsCollection(from: $from, to: $to) {
       contributionCalendar { totalContributions }
     }
   }
 }
 `;
 
-const data = await graphql(query, {
+// last 12 months
+const last12Data = await graphql(queryRange, {
   login: LOGIN,
-  from12: iso(oneYearAgo),
-  to12: iso(now),
-  fromY: iso(yearStart),
-  toY: iso(now),
+  from: iso(oneYearAgo),
+  to: iso(now),
 });
+const last12 = last12Data.user.contributionsCollection.contributionCalendar.totalContributions;
 
-const last12 = data.user.last12.contributionCalendar.totalContributions;
-const ytd = data.user.ytd.contributionCalendar.totalContributions;
+// all-time (sum year-by-year from account creation)
+const userData = await graphql(queryUser, { login: LOGIN });
+const createdAt = new Date(userData.user.createdAt);
+const startYear = createdAt.getUTCFullYear();
+const currentYear = now.getUTCFullYear();
+
+let allTime = 0;
+for (let y = startYear; y <= currentYear; y++) {
+  const from = new Date(Date.UTC(y, 0, 1, 0, 0, 0));
+  const to = y === currentYear ? now : new Date(Date.UTC(y + 1, 0, 1, 0, 0, 0));
+
+  const yearData = await graphql(queryRange, {
+    login: LOGIN,
+    from: iso(from),
+    to: iso(to),
+  });
+
+  allTime += yearData.user.contributionsCollection.contributionCalendar.totalContributions;
+}
 
 const updated = now.toISOString().replace("T", " ").replace(/\.\d+Z$/, " UTC");
 
 const body = [
+  `**All time:** ${formatInt(allTime)} contributions`,
   `**Last 12 months:** ${formatInt(last12)} contributions`,
-  `**Year to date:** ${formatInt(ytd)} contributions`,
   `\n_Last updated: ${updated}_`,
 ].join("\n");
 
