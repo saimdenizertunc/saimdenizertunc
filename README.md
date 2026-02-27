@@ -73,3 +73,14 @@ Links:
 
 ---
 
+## GitHub contributions (showcase)
+
+<!--START_SECTION:contribs-->
+**Last 12 months:** 86 contributions
+**Year to date:** 50 contributions
+
+_Last updated: 2026-02-27 22:39:40 UTC_
+<!--END_SECTION:contribs-->
+
+---
+
