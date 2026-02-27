@@ -73,14 +73,3 @@ Links:
 
 ---
 
-## How to reach me
-
-- GitHub: https://github.com/saimdenizertunc
-
-(If you want, tell me your preferred contact method—email/LinkedIn/website—and I’ll add it here.)
-
----
-
-## Security note
-
-If you open an issue or PR, please do not include secrets (API keys, tokens, credentials, private URLs, or production config).
