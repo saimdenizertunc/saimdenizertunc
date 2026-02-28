@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: update-readme-contribs
+  cancel-in-progress: true
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -41,4 +45,7 @@ jobs:
 
           git add README.md
           git commit -m "chore: update contribution counts"
-          git push
+
+          # Remote may move (e.g., concurrent runs or manual edits). Rebase before pushing.
+          git pull --rebase origin main
+          git push origin HEAD:main
