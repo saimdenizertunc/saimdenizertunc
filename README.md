@@ -45,31 +45,7 @@ I'm a software developer focused on **full-stack TypeScript** and the **Next.js 
   </tr>
 </table>
 
----
 
-### Featured projects
-
-<table>
-  <tr>
-    <td width="30%">
-      <h4><a href="https://github.com/saimdenizertunc/QuestLog">QuestLog</a></h4>
-      <p>Gamified task manager with XP, streaks, recurrence, and a badge system.</p>
-      <sub>Next.js 15 · TypeScript · Tailwind · Clerk · Prisma · PostgreSQL · Zod · Jest · Docker · Railway</sub>
-    </td>
-    <td width="30%">
-      <h4><a href="https://github.com/saimdenizertunc/wavemath">wavemath</a></h4>
-      <p>Editorial blog platform with embedded Sanity Studio and animation-heavy UI.</p>
-      <sub>Next.js 16 · React 19 · TypeScript · Sanity (GROQ) · Tailwind v4 · Framer Motion · ISR · JSON-LD</sub>
-    </td>
-    <td width="30%">
-      <h4><a href="https://github.com/saimdenizertunc/sea-specter">sea-specter</a></h4>
-      <p>Full-stack editorial/blog platform with admin panel, MDX content, and uploads.</p>
-      <sub>Next.js 16 · TypeScript · Tailwind · Prisma · PostgreSQL (Neon) · Clerk · MDX · UploadThing · Zod · ISR</sub>
-    </td>
-  </tr>
-</table>
-
----
 
 ### Currently focusing on
 
